@@ -31,7 +31,7 @@ class UlamSpiral:
         self.dirStep = {"r": [self.lineLength, 0], "u": [0, -self.lineLength], "l": [-self.lineLength, 0], "d": [0, self.lineLength]}
 
         self.firstData = []
-        self.currentMaxLine = 0
+        self.currentMaxLine = 6560  # max value according to screen
         self.isDrawLine = True
         self.start = False
 
@@ -61,8 +61,17 @@ class UlamSpiral:
             self.event()
             self.draw()
 
+
+
     def checkPrime(self, num):
-        """Check if it is prime"""
+        """
+        Check if it is prime
+        Arguments:
+         num: an integer
+        Returns:
+            bool value according to num is a prime or not
+
+        """
         if num == 2:
             return True
         elif num % 2 == 0 or num < 2:
@@ -74,7 +83,14 @@ class UlamSpiral:
             return True
 
     def drawLine(self, x, y, direction, drawCircle):
-        """draw lines"""
+        """
+        draw lines
+        Arguments:
+            x: x value of the center of the circle
+            y: y value of the center of the circle
+            direction: string r (right), u (up), l (left), d (down)
+            drawCircle: check if we need to draw the circle according to prime or not
+        """
 
         new_x, new_y = x+self.dirStep[direction][0], y+self.dirStep[direction][1]  # get new x, y
         if drawCircle:
@@ -84,16 +100,16 @@ class UlamSpiral:
         return new_x, new_y  # return new x,y
 
     def getFirstData(self):
-        """Get first data"""
+        """
+            Get first data
+            Basically checks all of the nums and store the value of them if prime True else False
+        """
         x, y = self.size/2, self.size/2  # first x and y
         dirIndex = 0
         step = 1
         temp_step = 0
         direction = self.dir[dirIndex]
         numOfLines = 0
-
-
-
         while (self.rcNum*self.rcNum) + self.rcNum*2 > numOfLines:
             if temp_step == 2:
                 temp_step = 0
@@ -110,11 +126,11 @@ class UlamSpiral:
             direction = self.dir[dirIndex % 4]  # new direction
             temp_step += 1  # change step
 
-        for i in range(len(self.firstData)):
-            print(self.firstData[i][-1])
-
     def draw(self):
-        """Draw everything"""
+        """
+            Draw everything
+            Like background lines, circles
+        """
         self.screen.fill(self.BLACK)
 
         if len(self.firstData) > self.currentMaxLine and self.start:
